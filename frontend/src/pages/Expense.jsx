@@ -22,7 +22,7 @@ const Expense = () => {
     console.log('get all bills')
     axios
       //.get('http://localhost:5555/api/bills')
-      .get(`${apiUrl}`)
+      .get(`${apiUrl}api/bills`)
       .then((reponse) => {
         console.log(reponse.data);
         let raw = reponse.data.data ?? reponse.data;
@@ -39,7 +39,7 @@ const Expense = () => {
   const handleAddBill = (billData) => {
     axios
       ///.post("http://localhost:5555/api/bills", billData)
-      .post(`${apiUrl}`,billData)
+      .post(`${apiUrl}api/bills`,billData)
       .then((res) => {
         setBills([res.data, ...bills]);
         setShowAddModal(false);
@@ -52,7 +52,7 @@ const Expense = () => {
   const handleDeleteBill = (id) => {
     axios
       //.delete(`http://localhost:5555/api/bills/${id}`)//ffff
-      .delete(`${apiUrl}${id}`)
+      .delete(`${apiUrl}api/bills/${id}`)
       .then((res) => {
         setBills(prev => prev.filter(bill => bill._id !== id));
         setShowDeleteModal(false);

@@ -45,7 +45,7 @@ const Dashboard = () => {
   useEffect(() => {
     axios
       //.get("http://localhost:5555/api/bills")
-      .get(`${apiUrl}`)
+      .get(`${apiUrl}api/bills`)
       .then(res => { setBills(res.data), console.log(res.data) })
       .catch(err => console.error(err));
   }, []);
@@ -60,7 +60,7 @@ const Dashboard = () => {
     billData.note="cố định";
     axios
       ///.post("http://localhost:5555/api/bills", billData)
-      .post(`${apiUrl}`,billData)
+      .post(`${apiUrl}api/bills`,billData)
       .then((res) => {
         setBills([res.data, ...bills]);
         setShowAddModal(false);
