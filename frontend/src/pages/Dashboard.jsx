@@ -6,6 +6,10 @@ import { FaMoneyBillWave, FaArrowCircleDown, FaArrowCircleUp } from "react-icons
 import AddBillModal from "../components/AddBillModal";
 import MoneyPerDay from "../components/MoneyPerDay";
 
+const apiUrl = (import.meta.env.DEV
+  ? import.meta.env.VITE_LOCAL_API_URL
+  : import.meta.env.VITE_API_URL
+)
 
 // Utility function to calculate income, expense, and balance from bills
 const calculateStats = (bills) => {
@@ -39,7 +43,9 @@ const Dashboard = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:5555/api/bills")
+    axios
+      //.get("http://localhost:5555/api/bills")
+      .get(`${apiUrl}`)
       .then(res => { setBills(res.data), console.log(res.data) })
       .catch(err => console.error(err));
   }, []);
@@ -52,7 +58,9 @@ const Dashboard = () => {
 
   const handleAddBill = (billData) => {
     billData.note="cố định";
-    axios.post("http://localhost:5555/api/bills", billData)
+    axios
+      ///.post("http://localhost:5555/api/bills", billData)
+      .post(`${apiUrl}`,billData)
       .then((res) => {
         setBills([res.data, ...bills]);
         setShowAddModal(false);

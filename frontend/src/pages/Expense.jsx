@@ -6,19 +6,23 @@ import AddBillModal from '../components/AddBillModal';
 import ChartComponent from '../components/ChartComponent';
 import DeleteBillModal from '../components/DeleteBillModal';
 import { Navigate } from 'react-router-dom';
-//import bill from '../../../backend/models/bill';
+
+const apiUrl = (import.meta.env.DEV
+  ? import.meta.env.VITE_LOCAL_API_URL
+  : import.meta.env.VITE_API_URL
+)
 
 const Expense = () => {
   const [bills, setBills] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
-  //const navigate = Navigate;
-
 
   useEffect(() => {
     console.log('get all bills')
-    axios.get('http://localhost:5555/api/bills')
+    axios
+      //.get('http://localhost:5555/api/bills')
+      .get(`${apiUrl}`)
       .then((reponse) => {
         console.log(reponse.data);
         let raw = reponse.data.data ?? reponse.data;
@@ -33,7 +37,9 @@ const Expense = () => {
   }, []);
 
   const handleAddBill = (billData) => {
-    axios.post("http://localhost:5555/api/bills", billData)
+    axios
+      ///.post("http://localhost:5555/api/bills", billData)
+      .post(`${apiUrl}`,billData)
       .then((res) => {
         setBills([res.data, ...bills]);
         setShowAddModal(false);
@@ -44,7 +50,9 @@ const Expense = () => {
   };
 
   const handleDeleteBill = (id) => {
-    axios.delete(`http://localhost:5555/api/bills/${id}`)//ffff
+    axios
+      //.delete(`http://localhost:5555/api/bills/${id}`)//ffff
+      .delete(`${apiUrl}${id}`)
       .then((res) => {
         setBills(prev => prev.filter(bill => bill._id !== id));
         setShowDeleteModal(false);
